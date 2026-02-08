@@ -9,8 +9,11 @@ const httpServer = createServer(app);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Initialize routes
-// Note: registerRoutes returns a Promise<Server> but we just need it to attach routes to 'app'
-await registerRoutes(httpServer, app);
+// Initialize routes WITHOUT top-level await
+function initRoutes() {
+    registerRoutes(httpServer, app);
+}
+
+initRoutes();
 
 export const handler = serverless(app);
